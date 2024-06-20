@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peers Member Dashboard</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+  <style>
+    body {
+      line-height: 1.5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #eeeaef; /* Light pastel purple background */
+    }
+
+    header {
+      background-color: #C8A2C8; /* Darker pastel purple for header */
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2; /* Ensure the header stays on top */
+    }
+
+    header h1 {
+      color: #392e3c; /* Dark purple */
+      cursor: pointer; /* Change cursor to pointer */
+    }
+
+    header nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    header nav li {
+      margin-left: 20px;
+    }
+
+    header nav a {
+      text-decoration: none;
+      color: #765f7c; /* Soft pink for links */
+    }
+
+    h1 {
+      color: #392e3c;
+      font-size: 25px;
+    }
+
+    h2 {
+      color: #392e3c;
+      font-size: 20px;
+      padding-bottom: 20%;
+    }
+
+    h3 {
+      color: #392e3c;
+      font-size: 20px;
+      text-align: center;
+    }
+
+    a { 
+      color: #765f7c; 
+    }
+
+    a:hover {
+      color: #392e3c; 
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    section {
+      margin-bottom: 20px;
+      padding: 15px;
+    }
+
+    section h3 {
+      margin-bottom: 10px;
+      color: #9b84a1; /* Soft pink for headings */
+    }
+
+    img {
+      width: 200px;
+      height: 70px;
+    }
+
+    .sidebar {
+      width: 200px; /* Adjust width as needed */
+      height: 100vh; /* Full viewport height */
+      background-color: #C8A2C8; /* Lighter pastel purple */
+      position: fixed; /* Fix sidebar to the left */
+      top: 0; /* Start at the top of the viewport */
+      left: -220px; /* Hide the sidebar initially */
+      padding: 20px;
+      padding-top: 10%;
+      overflow: hidden; /* Hide the overflow content */
+      transition: left 0.3s ease; /* Smooth transition */
+      z-index: 1; /* Ensure the sidebar is beneath the header */
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #5f4a61; /* Dark purple for links */
+      display: block; /* Make links fill full width */
+      margin-bottom: 10px;
+      padding: 5%;
+    }
+
+    .sidebar a:hover {
+      color: #281f29; /* Soft pink for hover */
+    }
+
+    .scroll-content {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .sidebar.show {
+      left: 0; /* Show the sidebar */
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing: border-box;
+    }
+    .container{
+      max-width: 1170px;
+      margin:auto;
+    }
+    .row{
+      display: flex;
+      flex-wrap: wrap;
+    }
+    ul{
+      list-style: none;
+    }
+    .footer{
+      background-color: #241c25;
+      padding: 70px 0;
+    }
+    .footer-col{
+      width: 25%;
+      padding: 0 15px;
+    }
+    .footer-col h4{
+      font-size: 18px;
+      color: #ffffff;
+      text-transform: capitalize;
+      margin-bottom: 35px;
+      font-weight: 500;
+      position: relative;
+    }
+    .footer-col h4::before{
+      content: '';
+      position: absolute;
+      left:0;
+      bottom: -10px;
+      background-color: #9d7f9d;
+      height: 2px;
+      box-sizing: border-box;
+      width: 50px;
+    }
+    .footer-col ul li:not(:last-child){
+      margin-bottom: 10px;
+    }
+    .footer-col ul li a{
+      font-size: 16px;
+      text-transform: capitalize;
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: 300;
+      color: #bbbbbb;
+      display: block;
+      transition: all 0.3s ease;
+    }
+    .footer-col ul li a:hover{
+      color: #ffffff;
+      padding-left: 8px;
+    }
+    .footer-col .social-links a{
+      display: inline-block;
+      height: 40px;
+      width: 40px;
+      background-color: rgba(255,255,255,0.2);
+      margin:0 10px 10px 0;
+      text-align: center;
+      line-height: 40px;
+      border-radius: 50%;
+      color: #ffffff;
+      transition: all 0.5s ease;
+    }
+    .footer-col .social-links a:hover{
+      color: #24262b;
+      background-color: #ffffff;
+    }
+
+    /*responsive*/
+    @media(max-width: 767px){
+      .footer-col{
+        width: 50%;
+        margin-bottom: 30px;
+    }
+    }
+    @media(max-width: 574px){
+      .footer-col{
+        width: 100%;
+    }
+    }
+
+  li {
+    color: #bbbbbb;
+  }
+
+  .member-list {
+    background-color: #d1c4e9;
+    border-radius: 10px;
+    padding: 20px;
+    margin: auto;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+    width: 600px;
+}
+.member-header {
+    font-size: 24px;
+    color: #241c25;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.member-item {
+    background-color: #ffffff;
+    border-radius: 5px;
+    padding: 15px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+    .member-item:hover {
+      transform: scale(1.01);
+      transition: transform 0.3s ease;
+    }
+
+.member-info {
+    font-size: 18px;
+    color: #4b0082;
+}
+.button-group {
+    display: flex;
+    gap: 10px;
+    margin-top: auto;
+}
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+button.update, button.delete {
+    background-color: #6a0dad;
+    color: white;
+}
+button.update:hover, button.delete:hover {
+    background-color: #4b0082;
+}
+
+button.update a {
+  color: white;
+  text-decoration: none;
+}
+
+
+.icon {
+    font-size: 24px;
+    color: #241c25;
+}
+
+select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      margin: auto;
+      background-color: #eeeaef;
+      color: #241c25;
+      font-size: 16px;
+      appearance: none; 
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      background-position: right 10px center;
+    }
+
+    select:hover {
+      border-color: #6a0dad;
+    }
+
+    option {
+      background-color: #eeeaef;
+      color: #4b0082;
+      padding: 10px;
+    }
+
+  </style>
+</head>
+<body>
+  {% load static %}
+  <header>
+    <div id="toggle-sidebar"><i class="fas fa-bars"></i></div>
+    <nav>
+      <ul>
+        <li><a href="{% url 'homepage' %}">Log Out</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <div class="scroll-content">
+      <h2>Peers Club Admin</h2>
+      <a href="{% url 'adminprofile' %}">Profile</a>
+      <a href="{% url 'adminapproval' %}">Approval</a>
+      <a href="{% url 'adminevent' %}">Event</a>
+      <a href="{% url 'adminboard' %}">Notice Board</a>
+      <a href="{% url 'adminmember' %}">Manage Member</a>
+    </div>
+  </div>
+
+  <main>
+    <section id="profile">
+      <h3>Manage Member</h3>
+      <div class="member-list">
+        <div class="member-header">
+            <i class="fas fa-users icon"></i>
+            <span>Manage Peers Club Members</span>
+        </div>
+    
+            <div class="member-item">
+                <div class="member-info" id="member-info">
+                    <h3>Confirm Deletion</h3>
+                    <p>Are you sure you want to delete the member's profile and position?</p>
+                    <form method="post">
+                        {% csrf_token %}
+                </div>
+                <div class="button-group">
+                        <input type="hidden" name="user_name" value="{{ user_name }}">
+                        <button type="submit" class="delete"><i class="fas fa-trash"></i> Delete</button>
+                </div>
+            </form>                
+            </div>
+      </div>
+    </section>    
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+     <div class="row">
+       <div class="footer-col">
+         <h4>Contact Us</h4>
+         <ul>
+           <li>Kolej Profesional MARA Beranang,
+            Lot 2333 Jalan Kajang Seremban,
+            43700 Beranang, Selangor, Malaysia</li>
+           <li></li>
+           <li><a href="#">KPMB official site</a></li>
+         </ul>
+       </div>
+       <div class="footer-col">
+         <h4>get help</h4>
+         <ul>
+           <li><a href="#">FAQ</a></li>
+         </ul>
+       </div>
+       <div class="footer-col">
+       </div>
+       <div class="footer-col">
+         <h4>follow us</h4>
+         <div class="social-links">
+           <a href="#"><i class="fab fa-facebook-f"></i></a>
+           <a href="#"><i class="fab fa-instagram"></i></a>
+         </div>
+       </div>
+     </div>
+    </div>
+ </footer>
+
+  <script>
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+      var sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('show');
+    });
+  </script>
+</body>
+</html>

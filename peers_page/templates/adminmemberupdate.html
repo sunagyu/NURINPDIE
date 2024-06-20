@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Create Member Account</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+<style>
+body {
+      line-height: 1.5;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #eeeaef; /* Light pastel purple background */
+}
+
+header {
+      background-color: #C8A2C8; /* Darker pastel purple for header */
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: relative;
+      z-index: 2; /* Ensure the header stays on top */
+    }
+
+    header h1 {
+      color: #392e3c; /* Dark purple */
+      cursor: pointer; /* Change cursor to pointer */
+    }
+
+    header nav ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+    }
+
+    header nav li {
+      margin-left: 20px;
+    }
+
+    header nav a {
+      text-decoration: none;
+      color: #765f7c; /* Soft pink for links */
+    }
+
+    h2 {
+      color: #392e3c;
+      font-size: 20px;
+      padding-left: 15%;
+      padding-bottom: 20%;
+    }
+
+    .sidebar {
+      width: 200px; /* Adjust width as needed */
+      height: 100vh; /* Full viewport height */
+      background-color: #C8A2C8; /* Lighter pastel purple */
+      position: fixed; /* Fix sidebar to the left */
+      top: 0; /* Start at the top of the viewport */
+      left: -220px; /* Hide the sidebar initially */
+      padding: 20px;
+      padding-top: 10%;
+      overflow: hidden; /* Hide the overflow content */
+      transition: left 0.3s ease; /* Smooth transition */
+      z-index: 1; /* Ensure the sidebar is beneath the header */
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #5f4a61; /* Dark purple for links */
+      display: block; /* Make links fill full width */
+      margin-bottom: 10px;
+      padding: 5%;
+    }
+
+    .sidebar a:hover {
+      color: #281f29; /* Soft pink for hover */
+    }
+
+    .scroll-content {
+      display: inline-block;
+      white-space: nowrap;
+    }
+
+    .sidebar.show {
+      left: 0; /* Show the sidebar */
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing: border-box;
+    }
+
+.create-account {
+    background-color: #d1c4e9;
+    border-radius: 10px;
+    padding: 20px;
+    margin: auto;
+    margin-top: 10%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    height: fit-content;
+}
+.account-header {
+    font-size: 24px;
+    color: #241c25;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.form-group {
+    margin-bottom: 20px;
+}
+label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+}
+input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    background-color: #6a0dad;
+    color: white;
+}
+button:hover {
+    background-color: #4b0082;
+}
+.icon {
+    font-size: 24px;
+    color: #241c25;
+}
+</style>
+</head>
+<body>
+    {% load static %}
+    <header>
+        <div id="toggle-sidebar"><i class="fas fa-bars"></i></div>
+        <nav>
+          <ul>
+            <li><a href="{% url 'homepage' %}">Log Out</a></li>
+          </ul>
+        </nav>
+      </header>
+
+      <div class="sidebar" id="sidebar">
+        <div class="scroll-content">
+          <h2>Peers Admin</h2>
+          <a href="{% url 'adminprofile' %}">Profile</a>
+          <a href="{% url 'adminapproval' %}">Approval</a>
+          <a href="{% url 'adminevent' %}">Event</a>
+          <a href="{% url 'adminboard' %}">Notice Board</a>
+          <a href="{% url 'adminmember' %}">Manage Member</a>
+        </div>
+      </div>
+
+
+      <main>
+        <div class="create-account">
+            <div class="account-header">
+                <i class="fas fa-user-plus icon"></i>
+                <span>Update Member Position</span>
+            </div>
+            <form action="" method="post" id="updateMemberPosition">
+                {% csrf_token %}
+                <input type="hidden" name="user_name" value="{{ user_name }}">
+                <div class="form-group">
+                    <label for="memposition">Position:</label>
+                    <input type="text" id="memposition" name="memposition" required>
+                </div>
+                <div class="button-group">
+                    <button type="submit"><i class="fas fa-save"></i> Assign Position</button>
+                </div>
+                <br>
+                <p>{{ message }}</p>
+            </form>
+        </div>
+    </main>      
+    
+    
+    
+
+<script>
+    document.getElementById('toggle-sidebar').addEventListener('click', function() {
+      var sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('show');
+    });
+</script>
+
+</body>
+</html>
